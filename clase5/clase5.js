@@ -46,9 +46,17 @@ class ProductManager {
         console.log("Indica el id del producto a eliminar");
       } else {
         const productSave = await this.getProducts();
-        productSave.splice(id, 1);
-        await fs.promises.writeFile(this.path, JSON.stringify(productSave));
-        return productSave;
+        const indexToProductDelete = productSave.findIndex(
+          (element) => element.id === id
+        );
+        if (indexToProductDelete === -1) {
+          throw new Error("El id indicado no se encotro");
+        } else {
+          productSave.splice(indexToProductDelete, 1);
+          console.log(productSave);
+          await fs.promises.writeFile(this.path, JSON.stringify(productSave));
+          return productSave;
+        }
       }
     } catch (error) {
       console.log(error);
@@ -65,13 +73,16 @@ class ProductManager {
         for (let i = 0; i < productSave.length; i++) {
           if (productSave[i].id === indexToRemove) {
             productSave[i].title = elementModify.title;
+            productSave[i].description = elementModify.description;
+            productSave[i].price = elementModify.price;
+            productSave[i].thumbnail = elementModify.thumbnail;
+            productSave[i].code = elementModify.code;
+            productSave[i].stock = elementModify.stock;
             break;
           }
         }
-        console.log("FILTRADOOO", productSave);
-        // productSave.splice(id, 1, elementModify);
-        // await fs.promises.writeFile(this.path, JSON.stringify(productSave));
-        // return productSave;
+        await fs.promises.writeFile(this.path, JSON.stringify(productSave));
+        return productSave;
       }
     } catch (error) {
       console.log(error);
@@ -99,30 +110,30 @@ async function prueba() {
 
   // const deleteProduct = await manager.deleteProduct(2);
 
-  const modifyProduct = await manager.modifyProduct(3, {
-    id: 3,
-    title: "elemento modificado as",
-    description: "descripcion1",
-    price: 20,
-    thumbnail: "URL image1",
-    code: 300,
-    stock: 1,
-  });
+  // const modifyProduct = await manager.modifyProduct(1, {
+  //   id: 1,
+  //   title: "titulo modificado",
+  //   description: "descripcion modificada",
+  //   price: 200,
+  //   thumbnail: "URL image meodificada",
+  //   code: 300,
+  //   stock: 10,
+  // });
 
-  // const addProduct = await manager.addProduct(
-  //   "Titulo1",
-  //   "descripcion1",
-  //   20,
-  //   "URL image1",
-  //   100,
-  //   40
-  // );
+  const addProduct = await manager.addProduct(
+    "Titulo5",
+    "descripcion5",
+    40,
+    "URL image5",
+    100,
+    40
+  );
 
-  // console.log(addProduct);
+  console.log(addProduct);
 
   // console.log(getProducts);
 
-  console.log(modifyProduct);
+  // console.log(modifyProduct);
 
   // console.log(deleteProduct);
 }
