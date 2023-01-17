@@ -1,1 +1,29 @@
-[{"id":{},"title":"Titulo1","description":"descripcion1","price":20,"thumbnail":"URL image1","code":100,"stock":40}]
+[
+  {
+    "id": 1,
+    "title": "Titulo1",
+    "description": "descripcion1",
+    "price": 20,
+    "thumbnail": "URL image1",
+    "code": 100,
+    "stock": 40
+  },
+  {
+    "id": 2,
+    "title": "elemento modificado papapappapap",
+    "description": "descripcion1",
+    "price": 20,
+    "thumbnail": "URL image1",
+    "code": 100,
+    "stock": 40
+  },
+  {
+    "id": 3,
+    "title": "Titulo1",
+    "description": "descripcion1",
+    "price": 20,
+    "thumbnail": "URL image1",
+    "code": 100,
+    "stock": 40
+  }
+]
