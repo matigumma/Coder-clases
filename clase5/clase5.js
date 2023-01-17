@@ -17,6 +17,15 @@ class ProductManager {
       console.log(error);
     }
   }
+  async getProductsById(id) {
+    const productSave = await this.getProducts();
+    const foundId = productSave.find((product) => product.id === id);
+    if (foundId === undefined) {
+      console.log("Not Found");
+    } else {
+      return "producto encontrado", foundId;
+    }
+  }
   async addProduct(title, description, price, thumbnail, code, stock) {
     try {
       const productSave = await this.getProducts();
@@ -72,6 +81,7 @@ class ProductManager {
 
         for (let i = 0; i < productSave.length; i++) {
           if (productSave[i].id === indexToRemove) {
+            productSave[i].id = id;
             productSave[i].title = elementModify.title;
             productSave[i].description = elementModify.description;
             productSave[i].price = elementModify.price;
@@ -107,34 +117,28 @@ const manager = new ProductManager("Products.json");
 
 async function prueba() {
   // const getProducts = await manager.getProducts();
-
+  // const getProductsById = await manager.getProductsById(1);
   // const deleteProduct = await manager.deleteProduct(2);
-
-  // const modifyProduct = await manager.modifyProduct(1, {
-  //   id: 1,
-  //   title: "titulo modificado",
+  // const modifyProduct = await manager.modifyProduct(5, {
+  //   title: "titulo modificado sin modificar el id",
   //   description: "descripcion modificada",
   //   price: 200,
   //   thumbnail: "URL image meodificada",
   //   code: 300,
   //   stock: 10,
   // });
-
-  const addProduct = await manager.addProduct(
-    "Titulo5",
-    "descripcion5",
-    40,
-    "URL image5",
-    100,
-    40
-  );
-
-  console.log(addProduct);
-
+  // const addProduct = await manager.addProduct(
+  //   "Titulo5",
+  //   "descripcion5",
+  //   40,
+  //   "URL image5",
+  //   100,
+  //   40
+  // );
+  // console.log(addProduct);
   // console.log(getProducts);
-
-  // console.log(modifyProduct);
-
+  // console.log(getProductsById);
+  console.log(modifyProduct);
   // console.log(deleteProduct);
 }
 
