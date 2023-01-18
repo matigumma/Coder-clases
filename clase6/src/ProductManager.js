@@ -6,30 +6,35 @@ export default class ProductManager {
   }
   // obtiene todos los productos
   async getProducts() {
-    try {
-      if (fs.existsSync(this.path)) {
-        const products = await fs.promises.readFile(this.path, "utf-8");
-        const productsParse = JSON.parse(products);
-        return productsParse;
-      } else {
-        console.log("no hay productos que devolver");
-        return null;
+    if (fs.existsSync(this.path)) {
+      try {
+          const products = await fs.promises.readFile(this.path, "utf-8");
+          const productsParse = JSON.parse(products);
+          return productsParse;
+      } catch (error) {
+        console.log("no se puede leer el archivo"); 
+        throw new Error('fallo lectura de archivo');
       }
-    } catch (error) {
-      console.log(error);
+    } else {
+      console.log("no se puede abrir el archivo"); // error handler 
+      throw new Error('no se puede abrir el archivo');
     }
   }
   // obtiene el producto segun el id pasado
-  async getProductsById(id) {
-    const productSave = await this.getProducts();
-    const foundId = productSave.find((product) => product.id === id);
-    if (foundId === undefined) {
-      console.log("Not Found");
-      return null;
-    } else {
+  async getProductsById(id) { // devuelve null o un elemento {}
+
+      const productSave = await this.getProducts();
+
+      const found = productSave.find((product) => product.id === id);// {objeto del producto encontrado}
+      
+      if (found === undefined) {
+        console.log("Not Found");
+        return null;
+      }
+
       console.log("producto encontrado");
-      return foundId;
-    }
+      return found;
+
   }
   // agrega un producto
   async addProduct(title, description, price, thumbnail, code, stock) {
